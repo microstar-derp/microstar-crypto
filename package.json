@@ -1,0 +1,42 @@
+{
+  "name": "microstar-crypto",
+  "version": "0.0.0",
+  "description": "Cryptography library for Microstar. Wraps tweetnacl, performing type conversions and simplifying public key management.",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "node test/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jtremback/microstar-crypto.git"
+  },
+  "keywords": [
+    "decentralized",
+    "distributed",
+    "public",
+    "key",
+    "symmetrical",
+    "private",
+    "key",
+    "nacl",
+    "tweetnacl",
+    "microstar",
+    "scuttlebutt"
+  ],
+  "author": "jehan.tremback@gmail.com <you@example.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jtremback/microstar-crypto/issues"
+  },
+  "homepage": "https://github.com/jtremback/microstar-crypto",
+  "devDependencies": {
+    "async": "^0.9.0",
+    "tape": "^3.0.3"
+  },
+  "dependencies": {
+    "tweetnacl": "^0.12.2"
+  }
+}
