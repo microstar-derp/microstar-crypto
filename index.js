@@ -115,3 +115,12 @@ exports.secretbox.open = function (box, nonce, secretKey, callback) {
     callback
   )
 }
+
+exports.hash = function (string, callback) {
+  string = stringToUtf8(string)
+debugger
+  cbTick(
+    base64ToString(nacl.hash(string)),
+    callback
+  )
+}

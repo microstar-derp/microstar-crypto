@@ -1,6 +1,6 @@
 {
   "name": "microstar-crypto",
-  "version": "0.0.0",
+  "version": "0.0.2",
   "description": "Cryptography library for Microstar. Wraps tweetnacl, performing type conversions and simplifying public key management.",
   "main": "index.js",
   "directories": {
