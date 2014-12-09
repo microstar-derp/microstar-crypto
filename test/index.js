@@ -64,7 +64,6 @@ test('secretbox', function (t) {
   function cryption (err, r) {
     mCrypto.secretbox(message, r.nonce, r.keys.secretKey, function (err, boxed) {
       mCrypto.secretbox.open(boxed, r.nonce, r.keys.secretKey, function (err, opened) {
-        debugger
         t.equal(boxed.length, 28)
         t.equal(message, opened)
         t.end()
