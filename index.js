@@ -8,8 +8,8 @@ var utf8ToString = nacl.util.encodeUTF8
 var stringToUtf8 = nacl.util.decodeUTF8
 
 // {
-//   publicKey: 'HXbBUOqgrrbwqTvru9dmJ2WuNJGwj6/RHWzfBzn3CBg=7a9gRZHMtKPOppOF3ADJFYhmX23vBCS25hR0Z1Q15pw=',
-//   secretKey: 'waZruVMkTFMCxRd8ubGN3ZpmdMGBNuaO7wIcFH+4RoU='
+//   public_key: 'HXbBUOqgrrbwqTvru9dmJ2WuNJGwj6/RHWzfBzn3CBg=7a9gRZHMtKPOppOF3ADJFYhmX23vBCS25hR0Z1Q15pw=',
+//   secret_key: 'waZruVMkTFMCxRd8ubGN3ZpmdMGBNuaO7wIcFH+4RoU='
 // }
 
 function cbTick (result, callback) {
@@ -19,22 +19,22 @@ function cbTick (result, callback) {
 }
 
 exports.keys = function (a, b) {
-  var secretKey, callback, box
+  var secret_key, callback, box
 
   if (typeof a === 'function') {
     callback = a
     box = nacl.box.keyPair()
   } else {
-    secretKey = stringToBase64(a)
+    secret_key = stringToBase64(a)
     callback = b
-    box = nacl.box.keyPair.fromSecretKey(secretKey)
+    box = nacl.box.keyPair.fromSecretKey(secret_key)
   }
 
   var sign = nacl.sign.keyPair.fromSeed(box.secretKey)
 
   var result = {
-    publicKey: base64ToString(box.publicKey) + base64ToString(sign.publicKey),
-    secretKey: base64ToString(box.secretKey)
+    public_key: base64ToString(box.publicKey) + base64ToString(sign.publicKey),
+    secret_key: base64ToString(box.secretKey)
   }
 
   cbTick(result, callback)
@@ -47,71 +47,71 @@ exports.makeNonce = function (callback) {
   )
 }
 
-exports.box = function (string, nonce, theirPublicKey, mySecretKey, callback) {
+exports.box = function (string, nonce, their_public_key, my_secret_key, callback) {
   string = stringToUtf8(string)
   nonce = stringToBase64(nonce)
-  theirPublicKey = stringToBase64(theirPublicKey.slice(0, 44))
-  mySecretKey = stringToBase64(mySecretKey)
+  their_public_key = stringToBase64(their_public_key.slice(0, 44))
+  my_secret_key = stringToBase64(my_secret_key)
 
   cbTick(
-    base64ToString(nacl.box(string, nonce, theirPublicKey, mySecretKey)),
+    base64ToString(nacl.box(string, nonce, their_public_key, my_secret_key)),
     callback
   )
 }
 
-exports.box.open = function (box, nonce, theirPublicKey, mySecretKey, callback) {
+exports.box.open = function (box, nonce, their_public_key, my_secret_key, callback) {
   box = stringToBase64(box)
   nonce = stringToBase64(nonce)
-  theirPublicKey = stringToBase64(theirPublicKey.slice(0, 44))
-  mySecretKey = stringToBase64(mySecretKey)
+  their_public_key = stringToBase64(their_public_key.slice(0, 44))
+  my_secret_key = stringToBase64(my_secret_key)
 
   cbTick(
-    utf8ToString(nacl.box.open(box, nonce, theirPublicKey, mySecretKey)),
+    utf8ToString(nacl.box.open(box, nonce, their_public_key, my_secret_key)),
     callback
   )
 }
 
-exports.sign = function (string, secretKey, callback) {
+exports.sign = function (string, secret_key, callback) {
   string = stringToUtf8(string)
-  secretKey = nacl.sign.keyPair.fromSeed(
-    stringToBase64(secretKey)
+  secret_key = nacl.sign.keyPair.fromSeed(
+    stringToBase64(secret_key)
   ).secretKey
 
   cbTick(
-    base64ToString(nacl.sign.detached(string, secretKey)),
+    base64ToString(nacl.sign.detached(string, secret_key)),
     callback
   )
 }
 
-exports.sign.verify = function (string, signature, publicKey, callback) {
+exports.sign.verify = function (string, signature, public_key, callback) {
   string = stringToUtf8(string)
   signature = stringToBase64(signature)
-  publicKey = stringToBase64(publicKey.slice(44))
+  public_key = stringToBase64(public_key.slice(44))
 
   cbTick(
-    nacl.sign.detached.verify(string, signature, publicKey),
+    nacl.sign.detached.verify(string, signature, public_key),
     callback
   )
 }
 
-exports.secretbox = function (string, nonce, secretKey, callback) {
+exports.secretbox = function (string, nonce, secret_key, callback) {
   string = stringToUtf8(string)
   nonce = stringToBase64(nonce)
-  secretKey = stringToBase64(secretKey)
+  secret_key = stringToBase64(secret_key)
 
   cbTick(
-    base64ToString(nacl.secretbox(string, nonce, secretKey)),
+    base64ToString(nacl.secretbox(string, nonce, secret_key)),
     callback
   )
 }
 
-exports.secretbox.open = function (box, nonce, secretKey, callback) {
+exports.secretbox.open = function (box, nonce, secret_key, callback) {
   box = stringToBase64(box)
   nonce = stringToBase64(nonce)
-  secretKey = stringToBase64(secretKey)
+  secret_key = stringToBase64(secret_key)
 
   cbTick(
-    utf8ToString(nacl.secretbox.open(box, nonce, secretKey)),
+    utf8ToString(nacl.secretbox.open(box, nonce, secret_key)),
     callback
   )
 }
