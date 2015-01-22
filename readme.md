@@ -1,4 +1,8 @@
-s library wraps tweetnacl, doing a few things.
+#### If this documentation is at all unclear, please do not hestitate to file an issue. Clarity is the primary goal of this project.
+
+# microstar-crypto
+
+This library wraps [tweetnacl](https://github.com/dchest/tweetnacl-js), doing a few things.
 
 - Performs type conversion on the UTF8 and Base64 encodings used in tweetnacl. All methods take and return strings.
 - Wraps synchronous methods into a callback API using process.nextTick. This is to make it easier to switch to different algorithms in the future, or offload processing to workers.
@@ -29,7 +33,7 @@ var keys = {
 }
 ```
 
-### .keys([secretKey, ]callback)
+### `.keys([secretKey, ]callback)`
 Generates a keypair. Called with a secretKey it will generate the corresponding public key. Without, it will generate both keys from scratch.
 ```javascript
 mCrypto.keys(function (err, keys) {
@@ -40,7 +44,7 @@ mCrypto.keys(function (err, keys) {
 })
 ```
 
-### .box(string, nonce, theirPublicKey, mySecretKey, callback)
+### `.box(string, nonce, theirPublicKey, mySecretKey, callback)`
 Encrypts a string using a public key. Returns a string.
 ```javascript
 mCrypto.box(string, nonce, alicePublicKey, bobSecretKey, function (err, box) {
@@ -52,7 +56,7 @@ mCrypto.box.open(box, nonce, bobPublicKey, aliceSecretKey, function (err, string
 })
 ```
 
-### .secretbox(string, nonce, secretKey, callback)
+### `.secretbox(string, nonce, secretKey, callback)`
 Encrypts a string symmetrically with one secret key. Returns a string.
 ```javascript
 mCrypto.secretbox(string, nonce, secretKey, function (err, box) {
@@ -64,7 +68,7 @@ mCrypto.secretbox.open(box, nonce, secretKey, function (err, string) {
 })
 ```
 
-### .sign(string, secretKey, callback)
+### `.sign(string, secretKey, callback)`
 Signs a string, returning a signature as a string. This uses `tweetnacl.sign.detached` under the hood.
 ```javascript
 mCrypto.sign(string, secretKey, function (err, signature) {
